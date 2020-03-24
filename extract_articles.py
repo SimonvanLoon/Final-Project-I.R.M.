@@ -45,9 +45,9 @@ def count_sentiment_words(dataframe):
 
 
 def main():
-    extracted_articles = extract_articles()
-    left_wing_sentiments = count_sentiment_words(extracted_articles[0])
-    right_wing_sentiments = count_sentiment_words(extracted_articles[1])
+    extracted_articles_df = extract_articles()
+    left_wing_sentiments = count_sentiment_words(extracted_articles_df[0])
+    right_wing_sentiments = count_sentiment_words(extracted_articles_df[1])
     print()
     print(
         "Total amount of words in left-wing articles: {0}\n\
