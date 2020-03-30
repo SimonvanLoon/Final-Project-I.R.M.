@@ -8,17 +8,22 @@ warnings.simplefilter(action='ignore', category=UserWarning)
 
 def extract_articles():
     df = pd.read_csv('articles1.csv', sep=',', header=0)
-    suitable_article_dates = df.loc[(  # select suitable article dates
+    # select suitable article dates
+    suitable_article_dates = df.loc[(  
         "2016-05-10" <= df['date']) & (df['date'] <= "2016-11-07"), :]
-    left_wing_papers = suitable_article_dates.loc[(  # select articles with either The New York Times or CNN as publisher
+    # select articles with either The New York Times or CNN as publisher
+    left_wing_papers = suitable_article_dates.loc[(  
         df['publication'] == 'New York Times') | (df['publication'] == 'CNN'), :]
-    right_wing_papers = suitable_article_dates.loc[df['publication']  # select articles with Breitbart as publisher
+    # select articles with Breitbart as publisher
+    right_wing_papers = suitable_article_dates.loc[df['publication']  
                                                    == 'Breitbart', :]
     p = re.compile(r"\bTrump(\'s)*[\s\.]{1}")
-    left_wing_trump = left_wing_papers.loc[left_wing_papers['title'].str.contains(  # select articles with contain the regex in the title column
+    # select articles with contain the regex in the title column
+    left_wing_trump = left_wing_papers.loc[left_wing_papers['title'].str.contains( 
         r"\bTrump(\'s)*[\s\.]{1}", regex=True), :].sort_values(by='date').head(600)
+    # take every 2nd article of the Breitbart articles
     right_wing_trump = (right_wing_papers.loc[right_wing_papers['title'].str.contains(
-        r"\bTrump(\'s)*[\s\.]{1}", regex=True), :].sort_values(by='date')).loc[::2, :].head(600)  # take every 2nd article of the Breitbart articles
+        r"\bTrump(\'s)*[\s\.]{1}", regex=True), :].sort_values(by='date')).loc[::2, :].head(600)  
     return [left_wing_trump, right_wing_trump]
 
 
